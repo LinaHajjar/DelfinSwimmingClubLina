@@ -90,7 +90,7 @@ public class UI {
 
         switch(nav){
             case 1: //Calculate the membership fees.
-                System.out.println("you chose option 1");
+                System.out.println("you chose option 1: Calculate the membership fees.");
                 int memberNrToCaculateFees=Util.intPrompt("what is the number of the member you want to calculate the fees?: ");
                 Member memberToCalculateTheFees = MemberMethods.findMemberByNumber(memberNrToCaculateFees,members);
                 double membershipFees=MemberMethods.calculateMembershipFees(memberToCalculateTheFees);
@@ -98,15 +98,15 @@ public class UI {
                 accountantMenu(employee);
                 break;
             case 2: //see an overview of the expected annual dues payments
-                System.out.println("you chose option 2");
+                System.out.println("you chose option 2: see an overview of the expected annual dues payments.");
                 accountantMenu(employee);
                 break;
             case 3: //see a list of members who are in arrears (restance) with their membership fees.
-                System.out.println("you chose option 3");
+                System.out.println("you chose option 3: see a list of members who are in arrears with their membership fees.");
                 accountantMenu(employee);
                 break;
             case 4: //Delete members who are in arrears (restance).
-                System.out.println("you chose option 4");
+                System.out.println("you chose option 4: Delete members who are in arrears.");
                 accountantMenu(employee);
                 break;
             case 5:
@@ -127,17 +127,17 @@ public class UI {
                            2. see a list of top 5 swimmers for each swimming discipline.
                            3. Exit
                            """);
-        int nav = Util.getIntInput("Enter the number from the list: ", "wrong input, only a number between 1 and 5",1,5);
+        int nav = Util.getIntInput("Enter the number from the list: ", "wrong input, only a number between 1 and 3",1,3);
         Scanner input = new Scanner(System.in);
 
         switch(nav){
             case 1: //record each swimmer's best training results and dates.
-                System.out.println("You chose option 1");
+                System.out.println("You chose option 1: register a swimmer's best training results and dates.");
                 SwimmingResult.registrerSwimResult(swimmingResults);
                 trainerMenu(trainer);
                 break;
             case 2:
-                System.out.println("You chose option 2");
+                System.out.println("You chose option 2: see a list of top 5 swimmers for each swimming discipline.");
                 CompetitionMember.bestFive(competitionMembers);
                 trainerMenu(trainer);
                 break;
@@ -151,19 +151,17 @@ public class UI {
     }
 
     public static void createMember(Scanner input, ArrayList<Member> members) throws IOException {
-        System.out.println("Enter the new member's name:");
-        String newName = input.nextLine();
+
+        String newName = Util.stringPrompt("Enter the new member's name: ");
 
         System.out.println("Enter the date of birth in the form year-month-day:");
         LocalDate dateOfBirth= LocalDate.parse(input.next());
         //int newAge = input.nextInt();
         input.nextLine(); // Consume the newLine
 
-        System.out.println("Enter address:");
-        String newAddress = input.nextLine();
+        String newAddress = Util.stringPrompt("Enter the new address: ");
 
-        System.out.println("Enter phone number:");
-        String newPhoneNumber = input.nextLine();
+        String newPhoneNumber = Util.stringPrompt("Enter the new phone number: ");
 
         int newMemberNr = Member.calculateMemberNr(members);
         System.out.println("your new member has this member number: " +newMemberNr );
@@ -255,9 +253,9 @@ public class UI {
     public static void deleteMember(Scanner input, ArrayList<Member> members) throws IOException{
         printNumberedMemberNames(members);
 
-        System.out.println("Enter the number of the person you want to delete:");
-        int memberNumber = input.nextInt();
-        input.nextLine(); // consume the newline
+        //System.out.println("Enter the number of the person you want to delete:");
+        int memberNumber = Util.intPrompt("Enter the number of the person you want to delete:");
+        //input.nextLine(); // consume the newline
 
         if (memberNumber < 1 || memberNumber > members.size()) {
             System.out.println("Invalid person number.");
