@@ -1,0 +1,4 @@
+Joakim,40405050,TestGade 21,1973-10-10,3,pass1234,Trainer,BossKim
+Karsten,12345678,På gaden,1969-05-18,1,password,Formand,Karsten med stort K
+Connie,876543Boss21,Derhjemme,1982-11-02,3,ConniePigen,Trainer,Connie82
+Maj,87654321,et sted,2000-09-09,2,pass,Cashier,Maj375
