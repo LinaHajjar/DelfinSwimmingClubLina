@@ -5,6 +5,7 @@ import main_package.other.Util;
 import main_package.people.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -45,7 +46,7 @@ public class UI {
         switch(nav){
             case 1:
                 System.out.println("Create a member");
-                MemberMethods.createMember(input, members);
+                createMember(input, members);
                 foremanMenu(currentUser, members);
                 break;
             case 2:
@@ -55,12 +56,12 @@ public class UI {
                 break;
             case 3:
                 System.out.println("Edit one of the members");
-                MemberMethods.editMember(input, members);
+                editMember(input, members);
                 foremanMenu(currentUser, members);
                 break;
             case 4:
                 System.out.println("Delete one of the members");
-                MemberMethods.deleteMember(input, members);
+                deleteMember(input, members);
                 foremanMenu(currentUser, members);
                 break;
             case 5:
@@ -148,6 +149,125 @@ public class UI {
                 trainerMenu(trainer);
         }
     }
+
+    public static void createMember(Scanner input, ArrayList<Member> members) throws IOException {
+        System.out.println("Enter the new member's name:");
+        String newName = input.nextLine();
+
+        System.out.println("Enter the date of birth in the form year-month-day:");
+        LocalDate dateOfBirth= LocalDate.parse(input.next());
+        //int newAge = input.nextInt();
+        input.nextLine(); // Consume the newLine
+
+        System.out.println("Enter address:");
+        String newAddress = input.nextLine();
+
+        System.out.println("Enter phone number:");
+        String newPhoneNumber = input.nextLine();
+
+        int newMemberNr = Member.calculateMemberNr(members);
+        System.out.println("your new member has this member number: " +newMemberNr );
+
+        //System.out.println("Enter kontingent: (comma is with , not .)");
+        //double newKontingent = input.nextDouble();
+
+        double newKontingent =0.0;
+        System.out.println("Is the member active? (True/false):");
+        boolean newAktiv = input.nextBoolean();
+
+        Member newMember = new Member(newName, newPhoneNumber, newAddress, dateOfBirth, newMemberNr, newKontingent, newAktiv);
+        newKontingent =MemberMethods.calculateMembershipFees(newMember);
+        System.out.println("your new member: " +newName + " 's membership fees are: " + newKontingent + " Kr.");
+        newMember.setKontingent(newKontingent);
+
+        members.add(newMember); // Added to the ArrayList in main_package.Main.
+        Filehandler.writeToFileMember(members);
+        System.out.println("New person created successfully.");
+        //writeMemberToFile(nyPerson);  //File handling
+    }//end of createMember
+
+    public static void editMember(Scanner input, ArrayList<Member> members) throws IOException{
+        printNumberedMemberNames(members);
+
+        System.out.println("Enter the number of the person you want to edit:");
+        int memberNumber = input.nextInt();
+        input.nextLine(); // consume the newline
+
+        if (memberNumber < 1 || memberNumber > members.size()) {
+            System.out.println("Invalid member number");
+            return;
+        }
+
+        Member memberToEdit = members.get(memberNumber - 1);
+
+        System.out.println("""
+                           Which information do you want to change on the chosen person?
+                           1. Name
+                           2. Date of birth
+                           3. Address
+                           4. Phone Number
+                           5. Active status
+                           6. Cancel
+                           """);
+
+        int attributeChoice = input.nextInt();
+        input.nextLine(); // Consume the newline
+
+        switch (attributeChoice) {
+            case 1:
+                System.out.println("Enter new name:");
+                memberToEdit.setName(input.nextLine());
+                System.out.println("Name updated successfully.");
+                break;
+            case 2:
+                System.out.println("Enter the new date of birth in the form year-month-date:");
+                LocalDate dateOfBirth=LocalDate.parse(input.next());
+                memberToEdit.setDateOfBirth(dateOfBirth);
+                input.nextLine(); // consume the newline
+                System.out.println("Age updated successfully.");
+                break;
+            case 3:
+                System.out.println("Enter new address:");
+                memberToEdit.setAddress(input.nextLine());
+                System.out.println("Address updated successfully.");
+                break;
+            case 4:
+                System.out.println("Enter new Phone number:");
+                memberToEdit.setPhoneNumber(input.nextLine());
+                System.out.println("Phone number updated successfully.");
+                break;
+            case 5:
+                System.out.println("Is the member active? (true/false):");
+                memberToEdit.setAktiv(input.nextBoolean());
+                input.nextLine(); // Consume the newline
+                System.out.println("Active status updated successfully.");
+                break;
+            case 6:
+                System.out.println("Edit cancelled");
+                return;
+            default:
+                System.out.println("Invalid choice");
+        }
+        Filehandler.writeToFileMember(members);
+        System.out.println("the member is successfully updated.");
+    }// end of editMember
+
+    public static void deleteMember(Scanner input, ArrayList<Member> members) throws IOException{
+        printNumberedMemberNames(members);
+
+        System.out.println("Enter the number of the person you want to delete:");
+        int memberNumber = input.nextInt();
+        input.nextLine(); // consume the newline
+
+        if (memberNumber < 1 || memberNumber > members.size()) {
+            System.out.println("Invalid person number.");
+            return;
+        }
+
+        Member memberToDelete = members.remove(memberNumber - 1);
+        Filehandler.writeToFileMember(members);
+        System.out.println(memberToDelete.getName() + " deleted successfully.");
+    }// end of deleteMember
 
 
 }//end of class

@@ -68,9 +68,6 @@ public class Person {
         return calculateAge();
     }
 
-
-
-
     @Override
     public String toString() {
         return  "Name         : " + name + "\n" +

@@ -5,8 +5,8 @@ Steffen,896473258,på vej,1988-08-12,4,655.0,false
 Aline,98765432,her,1994-05-30,5,650.0,false
 Helene,23456789,i do not know,1970-07-02,6,7534.0,true
 Aline,987641234,et sted,2004-05-23,7,1200.0,true
-lajla,89765,på vej,1994-02-09,8,1200.0,true
-Nikole,98765432,testaddress,1988-05-30,9,500.0,false
+lajla,89765,på vej,1990-02-09,8,1200.0,true
+Nikole,98765432,testaddress,1989-05-30,9,500.0,false
 Rima,987654,jeg ved det ikke,1987-10-04,10,1200.0,true
-Filip,9876543,test,1983-11-24,11,500.0,false
+Ralf,9876543,test,1983-11-24,11,500.0,false
 Ghina,987654,test2,1992-05-30,12,1200.0,true
