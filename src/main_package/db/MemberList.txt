@@ -1,12 +1,25 @@
-Jørgen Leth,12345678,KokkensVej 42,1939-12-03,1,500.0,true
-Dee Z. Nots,87654321,DragonVej 42,1956-07-12,2,250.0,false
-Lina,12345678,Nørrebro,1985-03-03,3,500.0,true
-Steffen,896473258,på vej,1988-08-12,4,655.0,false
-Aline,98765432,her,1994-05-30,5,650.0,false
-Helene,23456789,i do not know,1970-07-02,6,7534.0,true
-Aline,987641234,et sted,2004-05-23,7,1200.0,true
-lajla,89765,på vej,1990-02-09,8,1200.0,true
-Nikole,98765432,testaddress,1989-05-30,9,500.0,false
-Rima,987654,jeg ved det ikke,1987-10-04,10,1200.0,true
-Ralf,9876543,test,1983-11-24,11,500.0,false
-Ghina,987654,test2,1992-05-31,12,1200.0,true
+Jørgen Leth,12345678,KokkensVej 42,1939-12-03,1,1600.0,false
+Dee Z. Nots,87654321,DragonVej 42,1956-07-12,2,1600.0,true
+Joa,3120321,Fghjisdfoå,1985-03-03,3,1600.0,false
+Steffen,9876532,på vej,1987-02-20,4,1600.0,true
+Oline,098765432,derhjemme eller på vej,1985-12-13,5,1600.0,false
+Søren,31248901,kastrupvej 129,1988-11-06,6,1600.0,true
+Søren rasmussen,31248901,kastrupvej 129,1988-11-06,7,1600.0,false
+karsten,66677666,satansvej 666,1995-06-06,8,1600.0,true
+Lina,41354222,Nørrebro,1955-05-05,9,1600.0,false
+Tobias,12134323,Istedsgade 34,2020-11-12,10,1600.0,true
+Elias,24135252,Blåbærvej,1998-04-01,11,1600.0,false
+Camilla,34363434,Majvej 56,1991-05-04,12,1600.0,false
+Sebastian,13254223,Udbakken 16,2015-09-02,13,1600.0,false
+Maria,21354252,Udbakken 16,1986-08-05,14,1600.0,true
+Ellen,12413524,udbakken 16,2018-11-27,15,1600.0,true
+Heidi,34232232,Skruvby 119,1960-11-19,16,1600.0,true
+Søren,98765432,her,1985-01-20,18,1600.0,false
+Lasse,8763251,i do not know,1992-01-01,19,1600.0,true
+Jørgen Rasmussen,78643423,et sted,1989-09-09,20,1600.0,false
+BinLaden,14314131,terroristgade,1866-06-06,21,1600.0,false
+lkqjhx,2743612,sdh,2024-11-01,22,1600.0,true
+Birgitte Larsen,12345678,Ingerslevsgade 170 1705 København,1990-05-04,23,1600.0,true
+Sel,215612,somethomsfbs,2000-09-03,24,1600.0,false
+Sinky,1234689,her eller der,1999-11-30,25,1600.0,true
+Aline,0987654,derhjemme,2011-03-29,26,1000.0,true

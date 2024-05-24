@@ -1,271 +1,262 @@
 package main_package;
 
+import main_package.other.Contingent;
+import main_package.other.ContingentMethods;
 import main_package.other.Filehandler;
 import main_package.other.Util;
-import main_package.people.*;
+import main_package.people.CompetitionMember;
+import main_package.people.Employee;
+import main_package.people.Member;
+import main_package.people.PersonMethods;
+import main_package.people.SwimmingResult;
 
-import java.io.IOException;
-import java.time.LocalDate;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
-
-import static main_package.people.MemberMethods.printNumberedMemberNames;
 
 public class UI {
 
-    public static void userRole(Employee currentUser, ArrayList<Member> members)throws IOException{
+    public static void userRole(Employee currentUser, ArrayList<Member> members, ArrayList<Employee> employees, ArrayList<Contingent> contingents,ArrayList<CompetitionMember>compMembers) throws IOException {
 
         switch(currentUser.getAccesGroup()){
             case 1:
-                foremanMenu(currentUser, members);
+                foremanMenu(members, employees, contingents);
                 break;
             case 2:
-                accountantMenu(currentUser);
+                accountantMenu(currentUser, contingents, members);
                 break;
             case 3:
-                trainerMenu(currentUser);
+                trainerMenu(currentUser,members,compMembers);
                 break;
             default:
-
+                System.out.println("Invalid access group");
         }
     }
 
-    public static void foremanMenu(Employee currentUser, ArrayList<Member> members)throws IOException{
-        System.out.println("""
+    // Menu for the Foreman. with CRUD for members and employees.
+    public static void foremanMenu(ArrayList<Member> members, ArrayList<Employee> employees, ArrayList <Contingent> contingents) throws IOException {
+        Scanner input = new Scanner(System.in);
+        boolean running = true;
+
+        while (running) {
+            System.out.println("""
+                               Foreman Menu
+                               What do you want to do?
+                               1. Manage members
+                               2. Manage Employees
+                               3. Exit the program.
+                               """);
+            try {
+                int nav = input.nextInt();
+                input.nextLine();
+
+                switch(nav) {
+                    case 1:
+                        foremanMemberMenu(members, contingents);
+                        break;
+                    case 2:
+                        foremanEmployeeMenu(employees);
+                        break;
+                    case 3:
+                        System.out.println("The program is closing.");
+                        running = false;
+                        break;
+                    default:
+                        System.out.println("Invalid input. Please give me a number between 1 and 3.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                input.nextLine(); // consume invalid input.
+            }
+        }
+    }
+
+    // CRUD for Members
+    public static void foremanMemberMenu(ArrayList<Member> members, ArrayList <Contingent> contingens) throws IOException {
+        Scanner input = new Scanner(System.in);
+        boolean running = true;
+
+        while (running) {
+            System.out.println("""
                            Here are your options:
                            1. Create a new member
                            2. Print out the list of members
                            3. Edit one of members
                            4. Delete one of members
-                           5. Exit
+                           7. Return to foreman menu
                            """);
-        int nav = Util.getIntInput("Enter the number from the list: ", "wrong input, only a number between 1 and 5",1,5);
-        Scanner input = new Scanner(System.in);
-
-        //input.nextLine(); // consume the newline
-        switch(nav){
-            case 1:
-                System.out.println("Create a member");
-                createMember(input, members);
-                foremanMenu(currentUser, members);
-                break;
-            case 2:
-                System.out.println("Print the member list");
-                MemberMethods.printTheMemberList(members);
-                foremanMenu(currentUser, members);
-                break;
-            case 3:
-                System.out.println("Edit one of the members");
-                editMember(input, members);
-                foremanMenu(currentUser, members);
-                break;
-            case 4:
-                System.out.println("Delete one of the members");
-                deleteMember(input, members);
-                foremanMenu(currentUser, members);
-                break;
-            case 5:
-                System.out.println("The program is closing.");
-                System.exit(0);
-            default:
-                System.out.println("wrong input, you should only choose a number between 1 and 5");
-                foremanMenu(currentUser, members);
-        }
-    }//end of foremanMenu
-
-
-    public static void accountantMenu(Employee employee) throws IOException{
-        System.out.println("""
-                           Here are your options:
-                           1. Calculate the membership fees.
-                           2. see an overview of the expected annual dues payments.
-                           3. see a list of members who are in arrears (restance) with their membership fees.
-                           4. Delete members who are in arrears (restance).
-                           5. Exit
-                           """);
-        int nav = Util.getIntInput("Enter the number from the list: ", "wrong input, only a number between 1 and 5",1,5);
-        Scanner input = new Scanner(System.in);
-        ArrayList<Member> members = new ArrayList<>();
-        Filehandler.loadMemberTxt(members);
-
-        switch(nav){
-            case 1: //Calculate the membership fees.
-                System.out.println("you chose option 1: Calculate the membership fees.");
-                int memberNrToCaculateFees=Util.intPrompt("what is the number of the member you want to calculate the fees?: ");
-                Member memberToCalculateTheFees = MemberMethods.findMemberByNumber(memberNrToCaculateFees,members);
-                double membershipFees=MemberMethods.calculateMembershipFees(memberToCalculateTheFees);
-                System.out.println("the membership fees for the member: " +memberToCalculateTheFees.getName()+ "\n are: " +membershipFees+ " Kr");
-                accountantMenu(employee);
-                break;
-            case 2: //see an overview of the expected annual dues payments
-                System.out.println("you chose option 2: see an overview of the expected annual dues payments.");
-                accountantMenu(employee);
-                break;
-            case 3: //see a list of members who are in arrears (restance) with their membership fees.
-                System.out.println("you chose option 3: see a list of members who are in arrears with their membership fees.");
-                accountantMenu(employee);
-                break;
-            case 4: //Delete members who are in arrears (restance).
-                System.out.println("you chose option 4: Delete members who are in arrears.");
-                accountantMenu(employee);
-                break;
-            case 5:
-                System.exit(0);
-                break;
-            default:
-                System.out.println("wrong input, only a number between 1 and 5");
-                accountantMenu(employee);
-        }
-    }
-
-    public static void trainerMenu(Employee trainer) throws IOException{
-        ArrayList <SwimmingResult> swimmingResults=Filehandler.readFromFileSwimResult ();
-        ArrayList<CompetitionMember>competitionMembers=new ArrayList<>();
-        System.out.println("""
-                           Here are your options:
-                           1. register a swimmer's best training results and dates.
-                           2. see a list of top 5 swimmers for each swimming discipline.
-                           3. Exit
-                           """);
-        int nav = Util.getIntInput("Enter the number from the list: ", "wrong input, only a number between 1 and 3",1,3);
-        Scanner input = new Scanner(System.in);
-
-        switch(nav){
-            case 1: //record each swimmer's best training results and dates.
-                System.out.println("You chose option 1: register a swimmer's best training results and dates.");
-                SwimmingResult.registrerSwimResult(swimmingResults);
-                trainerMenu(trainer);
-                break;
-            case 2:
-                System.out.println("You chose option 2: see a list of top 5 swimmers for each swimming discipline.");
-                CompetitionMember.bestFive(competitionMembers);
-                trainerMenu(trainer);
-                break;
-            case 3:
-                System.exit(0);
-                break;
-            default:
-                System.out.println("wrong input, only a number between 1 and 3");
-                trainerMenu(trainer);
-        }
-    }
-
-    public static void createMember(Scanner input, ArrayList<Member> members) throws IOException {
-
-        String newName = Util.stringPrompt("Enter the new member's name: ");
-
-        System.out.println("Enter the date of birth in the form year-month-day:");
-        LocalDate dateOfBirth= LocalDate.parse(input.next());
-        //int newAge = input.nextInt();
-        input.nextLine(); // Consume the newLine
-
-        String newAddress = Util.stringPrompt("Enter the new address: ");
-
-        String newPhoneNumber = Util.stringPrompt("Enter the new phone number: ");
-
-        int newMemberNr = Member.calculateMemberNr(members);
-        System.out.println("your new member has this member number: " +newMemberNr );
-
-        //System.out.println("Enter kontingent: (comma is with , not .)");
-        //double newKontingent = input.nextDouble();
-
-        double newKontingent =0.0;
-        System.out.println("Is the member active? (True/false):");
-        boolean newAktiv = input.nextBoolean();
-
-        Member newMember = new Member(newName, newPhoneNumber, newAddress, dateOfBirth, newMemberNr, newKontingent, newAktiv);
-        newKontingent =MemberMethods.calculateMembershipFees(newMember);
-        System.out.println("your new member: " +newName + " 's membership fees are: " + newKontingent + " Kr.");
-        newMember.setKontingent(newKontingent);
-
-        members.add(newMember); // Added to the ArrayList in main_package.Main.
-        Filehandler.writeToFileMember(members);
-        System.out.println("New person created successfully.");
-        //writeMemberToFile(nyPerson);  //File handling
-    }//end of createMember
-
-    public static void editMember(Scanner input, ArrayList<Member> members) throws IOException{
-        printNumberedMemberNames(members);
-
-        System.out.println("Enter the number of the person you want to edit:");
-        int memberNumber = input.nextInt();
-        input.nextLine(); // consume the newline
-
-        if (memberNumber < 1 || memberNumber > members.size()) {
-            System.out.println("Invalid member number");
-            return;
-        }
-
-        Member memberToEdit = members.get(memberNumber - 1);
-
-        System.out.println("""
-                           Which information do you want to change on the chosen person?
-                           1. Name
-                           2. Date of birth
-                           3. Address
-                           4. Phone Number
-                           5. Active status
-                           6. Cancel
-                           """);
-
-        int attributeChoice = input.nextInt();
-        input.nextLine(); // Consume the newline
-
-        switch (attributeChoice) {
-            case 1:
-                System.out.println("Enter new name:");
-                memberToEdit.setName(input.nextLine());
-                System.out.println("Name updated successfully.");
-                break;
-            case 2:
-                System.out.println("Enter the new date of birth in the form year-month-date:");
-                LocalDate dateOfBirth=LocalDate.parse(input.next());
-                memberToEdit.setDateOfBirth(dateOfBirth);
+            try {
+                int nav = input.nextInt();
                 input.nextLine(); // consume the newline
-                System.out.println("Age updated successfully.");
-                break;
-            case 3:
-                System.out.println("Enter new address:");
-                memberToEdit.setAddress(input.nextLine());
-                System.out.println("Address updated successfully.");
-                break;
-            case 4:
-                System.out.println("Enter new Phone number:");
-                memberToEdit.setPhoneNumber(input.nextLine());
-                System.out.println("Phone number updated successfully.");
-                break;
-            case 5:
-                System.out.println("Is the member active? (true/false):");
-                memberToEdit.setAktiv(input.nextBoolean());
-                input.nextLine(); // Consume the newline
-                System.out.println("Active status updated successfully.");
-                break;
-            case 6:
-                System.out.println("Edit cancelled");
-                return;
-            default:
-                System.out.println("Invalid choice");
+
+                switch(nav){
+                    case 1:
+                        System.out.println("Create a member");
+                        PersonMethods.createMember(input, members, contingens);
+                        break;
+                    case 2:
+                        System.out.println("Print the member list");
+                        PersonMethods.printTheMemberList(members);
+                        break;
+                    case 3:
+                        System.out.println("Edit one of the members");
+                        PersonMethods.editMember(input, members);
+                        break;
+                    case 4:
+                        System.out.println("Delete one of the members");
+                        PersonMethods.deleteMember(input, members);
+                        break;
+                    case 7:
+                        System.out.println("Going back to the foreman menu");
+                        running = false;
+                        break;
+                    default:
+                        System.out.println("Invalid option. Please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                input.nextLine(); // consume invalid input.
+            }
         }
-        Filehandler.writeToFileMember(members);
-        System.out.println("the member is successfully updated.");
-    }// end of editMember
+    }// End of Member Menu for the foreman
 
-    public static void deleteMember(Scanner input, ArrayList<Member> members) throws IOException{
-        printNumberedMemberNames(members);
+    // CRUD for Employees.
+    public static void foremanEmployeeMenu(ArrayList<Employee> employees) throws IOException {
+        Scanner input = new Scanner(System.in);
+        boolean running = true;
 
-        //System.out.println("Enter the number of the person you want to delete:");
-        int memberNumber = Util.intPrompt("Enter the number of the person you want to delete:");
-        //input.nextLine(); // consume the newline
+        while (running) {
+            System.out.println("""
+                           Here are your options:
+                           1. Create a new employee
+                           2. Print out the list of employees
+                           3. Edit one of the employees
+                           4. Delete one of the employees
+                           7. Return to foreman menu
+                           """);
+            try {
+                int nav = input.nextInt();
+                input.nextLine(); // consume the newline
 
-        if (memberNumber < 1 || memberNumber > members.size()) {
-            System.out.println("Invalid person number.");
-            return;
+                switch(nav){
+                    case 1:
+                        System.out.println("Create a new employee");
+                        PersonMethods.createEmployee(input, employees);
+                        break;
+                    case 2:
+                        System.out.println("Print the employee list");
+                        PersonMethods.printTheEmployeeList(employees);
+                        break;
+                    case 3:
+                        System.out.println("Edit one of the employees");
+                        PersonMethods.editEmployee(input, employees);
+                        break;
+                    case 4:
+                        System.out.println("Delete one of the employees");
+                        PersonMethods.deleteEmployee(input, employees);
+                        break;
+                    case 7:
+                        System.out.println("Going back to the foreman menu");
+                        running = false;
+                        break;
+                    default:
+                        System.out.println("Invalid option. Please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                input.nextLine(); // consume invalid input.
+            }
         }
+    }// End of Employee Menu for the foreman.
 
-        Member memberToDelete = members.remove(memberNumber - 1);
-        Filehandler.writeToFileMember(members);
-        System.out.println(memberToDelete.getName() + " deleted successfully.");
-    }// end of deleteMember
+    public static void accountantMenu(Employee currentUser, ArrayList<Contingent> membersContingent, ArrayList<Member> member) throws IOException {
+        //kald scanner class og brug den i stedet for at have scanner her
+        int nav = 0;
+        System.out.println("""
+                    Here are your options:
+                    1. See the expected yearly revenue
+                    2. Members in arrears
+                    3. Remove arrears
+                    4. Exit
+                    """);
+        Scanner input = new Scanner(System.in);
+        try {
+            nav = input.nextInt();
+            input.nextLine(); // consume the newline
+
+            switch (nav) {
+                case 1:
+                    ContingentMethods.calculateRevenue(member);
+                    System.out.println("Returning to your menu: ");
+                    accountantMenu(currentUser, membersContingent, member);
+                    System.out.println();
+                    break;
+                case 2:
+                    ContingentMethods.checkArrears(membersContingent, member);
+                    System.out.println("Returning to your menu: ");
+                    accountantMenu(currentUser, membersContingent, member);
+                    System.out.println();
+                    break;
+                case 3:
+                    ContingentMethods.removeArrears(membersContingent, member);
+                    System.out.println("Returning to your menu: ");
+                    accountantMenu(currentUser, membersContingent, member);
+                    System.out.println();
+                    break;
+                case 4:
+                    System.out.println("Exit.");
+                    System.exit(0);
+                default:
+                    System.out.println("you have entered a wrong number, please try again.");
+                    accountantMenu(currentUser, membersContingent, member);
+            }
+        }catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a number.");
+            input.nextLine(); // consume invalid input.
+        }
+    }// end of accountantMenu
+
+    public static void trainerMenu(Employee currentUser,ArrayList<Member> members,ArrayList<CompetitionMember>compMembers) throws IOException{
+        ArrayList <SwimmingResult> swimmingResults= Filehandler.readFromFileSwimResult ();
+        int nav;
+        do {
+            System.out.println("""
+                    Here are your options:
+                    1. View list of all swimmers 
+                    2. View a swimmer's result in all disciplines
+                    3. Register a swimmer's best result and date
+                    4. View the top five results for a chosen discipline for each age group
+                    5. Exit
+                    """);
+            nav = Util.getIntInputSwitch("choose a number from the list: ", "wrong input, only a number between 1 and 5: ", 1, 5);
+            switch (nav) {
+                case 1:
+                    PersonMethods.viewAllMembers (members, compMembers);
+                    //LASSE: View list of all swimmers
+
+                    //choose between: all swimmers, junior- eller seniorsvømmer, motionist eller konkurrencesvømmer.
+                    break;
+                case 2: //LINA DONE
+                    PersonMethods.seSwimmerResultAllDisciplines(members, swimmingResults);
+                    break;
+                case 3: //LINA DONE
+                    System.out.println("Register a swimmer's best result and date");
+                    PersonMethods.registrerSwimResult(swimmingResults);
+                    break;
+                case 4: //LASSE DONE
+                    PersonMethods.getBestFive(compMembers);
+                    break;
+                case 5:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("you should only choose w number between 1 and 6.");
+                    trainerMenu(currentUser,members,compMembers);
+            }
+        } while (nav != 5);
+    }//end of trainer menu
+
 
 
 }//end of class

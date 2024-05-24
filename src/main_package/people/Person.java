@@ -2,15 +2,16 @@ package main_package.people;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Scanner;
 
 public class Person {
 
     private String name;
     private String phoneNumber;
     private String address;
+    private LocalDate dateOfBirth;
     //private int age;
 
-    private LocalDate dateOfBirth;
     public Person(String name, String phoneNumber, String address, LocalDate dateOfBirth){
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -30,14 +31,6 @@ public class Person {
         return phoneNumber;
     }
 
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -50,15 +43,7 @@ public class Person {
         this.address = address;
     }
 
-    /*public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }*/
-
-    private int calculateAge () { // private because to be used only in this class
+    private int calculateAge () {
         LocalDate currentDate=LocalDate.now();
         Period period = Period.between(dateOfBirth, currentDate);
         return (period.getYears());
@@ -68,12 +53,21 @@ public class Person {
         return calculateAge();
     }
 
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+
     @Override
     public String toString() {
-        return  "Name         : " + name + "\n" +
-                "Date of birth: " +dateOfBirth + "\n"+
-                "Age          : " + getAge() + "\n" +
+        return "___________________________________________" + "\n" +
+                "Name         : " + name + "\n" +
+                "Date of birth: " + dateOfBirth + "\n" +
                 "Address      : " + address + "\n" +
-                "Phone number : " + phoneNumber;
+                "Phone number : " + phoneNumber + "\n";
     }
 }

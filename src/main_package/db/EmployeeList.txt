@@ -1,4 +1,7 @@
-Joakim,40405050,TestGade 21,1973-10-10,3,pass1234,Trainer,BossKim
-Karsten,12345678,På gaden,1969-05-18,1,password,Formand,Karsten med stort K
-Connie,876543Boss21,Derhjemme,1982-11-02,3,ConniePigen,Trainer,Connie82
-Maj,87654321,et sted,2000-09-09,2,pass,Cashier,Maj375
+Joakim,40405050,TestGade 21,1973-04-11,2,pass1234,Kasser,BossKim
+Karsten,12345678,På gaden,1966-07-13,1,password,Formand,Karsten med stort K
+Connie,876543Boss21,Derhjemme,1982-10-10,3,ConniePigen,Træner,Connie82
+Tina,123321123,istedsgade 34,1999-06-06,3,TinaBoss,Stripper,TinaBoss
+Søren,31248901,kastrupvej 129,1988-11-06,2,mangafreak1234,Rig svin,Severius
+Alexander,14134323,Nørrebro,2010-06-06,2,1234,Konge,AlexStore
+Lina H,55555555,et sted,1886-08-08,3,lina123,trainer,LinaH

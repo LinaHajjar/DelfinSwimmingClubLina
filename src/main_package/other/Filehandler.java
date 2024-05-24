@@ -5,14 +5,11 @@ import main_package.people.Member;
 import main_package.people.SwimmingDisciplin;
 import main_package.people.SwimmingResult;
 
-import java.io.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
 public class Filehandler {
-
-    //read from file Employee
     public static void loadEmployeeTxt(ArrayList<Employee> employees) throws FileNotFoundException {
         File employeeFile = new File("src/main_package/Db/EmployeeList.txt");
         Scanner scan = new Scanner(employeeFile);
@@ -22,7 +19,7 @@ public class Filehandler {
             String employeeName = employeeData[0];
             String employeePhoneNumber = employeeData[1];
             String employeeAddress = employeeData[2];
-            LocalDate employeeDateOfBirth =LocalDate.parse(employeeData[3]);
+            LocalDate employeeDateOfBirth=LocalDate.parse(employeeData[3]);
             //int employeeAge = Integer.parseInt(employeeData[3]);
             int employeeAccesGroup = Integer.parseInt(employeeData[4]);
             String employeePassword = employeeData[5];
@@ -33,23 +30,6 @@ public class Filehandler {
         }
     } //end of loadEmployeeTxt
 
-
-    public static void writeToFileMember(ArrayList<Member> members)throws IOException{
-        BufferedWriter out = new BufferedWriter(new FileWriter("src/main_package/db/MemberList.txt"));
-        for (Member member:members){
-            out.write(member.toPrint());
-        }
-        out.close();
-    }
-
-    public static void writeToFileSwimmingResult(ArrayList<SwimmingResult> swimmingResults)throws IOException{
-        BufferedWriter out = new BufferedWriter(new FileWriter("src/main_package/db/SwimResultList.txt"));
-        for (SwimmingResult swR:swimmingResults){
-            out.write(swR.toPrint());
-        }
-        out.close();
-    }
-    //read from file member
     public static void loadMemberTxt(ArrayList<Member> members) throws FileNotFoundException {
         File memberFile = new File("src/main_package/db/MemberList.txt");
         Scanner scan = new Scanner(memberFile);
@@ -59,14 +39,13 @@ public class Filehandler {
             String memberName = memberData[0];
             String memberPhoneNumber = memberData[1];
             String memberAddress = memberData[2];
-            LocalDate dateOfBirth =LocalDate.parse(memberData[3]);
-            //int memberAge = Integer.parseInt(memberData[3]);
+            LocalDate memeberDateOfBirth =LocalDate.parse(memberData[3]);
             int memberNr = Integer.parseInt(memberData[4]);
-            double kontingent = Double.parseDouble(memberData[5]);
+            double contingent = Double.parseDouble(memberData[5]);
             boolean aktiv = Boolean.parseBoolean(memberData[6]);
-            member = new Member(memberName, memberPhoneNumber, memberAddress, dateOfBirth, memberNr, kontingent, aktiv);
+            member = new Member(memberName, memberPhoneNumber, memberAddress, memeberDateOfBirth, memberNr,contingent,aktiv);
             members.add(member);
-        } //end of loadMemberTxt
+        }
     }//end of loadMemberTxt
 
     // Mangler save to file methods here.
@@ -74,6 +53,7 @@ public class Filehandler {
 
     public static ArrayList<SwimmingResult> readFromFileSwimResult () throws FileNotFoundException {
         Scanner scan=new Scanner(new File("src/main_package/db/SwimResultList.txt"));
+        //2;CRAWL;42;2024-02-10;
         ArrayList<SwimmingResult> swimmingResults=new ArrayList<>();
         while (scan.hasNextLine()){
             String line=scan.nextLine();
@@ -106,8 +86,60 @@ public class Filehandler {
             swimmingResults.add(newSwimminResult);
 
         }//end while
+
         return swimmingResults;
 
     }//end readFromFileSwimResult
+
+    public static void loadContingentTxt(ArrayList<Contingent> contigents) throws FileNotFoundException {
+        File contigentFile = new File("src/main_package/db/Contingent.txt");
+        Scanner scan = new Scanner(contigentFile);
+        Contingent memberContingent;
+        while (scan.hasNextLine()) {
+            String[] contingentData = scan.nextLine().split(",");
+            int memberNr = Integer.parseInt(contingentData[0]);
+            LocalDate dateOfPayment = LocalDate.parse(contingentData[1]);
+            LocalDate nextPayment = LocalDate.parse(contingentData[2]);
+            boolean arrears = Boolean.parseBoolean(contingentData[3]);
+            double debt = Double.parseDouble(contingentData[4]);
+
+            memberContingent = new Contingent(memberNr, dateOfPayment, nextPayment, arrears, debt);
+            contigents.add(memberContingent);
+        }
+    }//end of loadMemberTxt
+
+    public static void writeToFileMember(ArrayList<Member> members)throws IOException{
+        BufferedWriter out = new BufferedWriter(new FileWriter("src/main_package/db/MemberList.txt"));
+        for (Member member:members){
+            out.write(member.toPrint());
+        }
+        out.close();
+    }
+
+    public static void writeToFileEmployee(ArrayList<Employee> employees)throws IOException{
+        BufferedWriter out = new BufferedWriter(new FileWriter("src/main_package/db/EmployeeList.txt"));
+        for (Employee emp: employees){
+            out.write(emp.toPrint());
+        }
+        out.close();
+    }
+
+    public static void writeToFileSwimmingResult(ArrayList<SwimmingResult> swimmingResults)throws IOException{
+        BufferedWriter out = new BufferedWriter(new FileWriter("src/main_package/db/SwimResultList.txt"));
+        for (SwimmingResult swR:swimmingResults){
+            out.write(swR.toPrint());
+        }
+        out.close();
+    }
+
+    public static void writeToFileContingent(ArrayList <Contingent> contingents) throws IOException{
+        BufferedWriter out = new BufferedWriter(new FileWriter("src/main_package/db/Contingent.txt"));
+
+        for (Contingent writeContingent : contingents){
+            out.write(writeContingent.toPrint());
+        }
+        out.close();
+    }
+
 
 }//end of class
