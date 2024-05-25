@@ -18,8 +18,9 @@ Søren,98765432,her,1985-01-20,18,1600.0,false
 Lasse,8763251,i do not know,1992-01-01,19,1600.0,true
 Jørgen Rasmussen,78643423,et sted,1989-09-09,20,1600.0,false
 BinLaden,14314131,terroristgade,1866-06-06,21,1600.0,false
-lkqjhx,2743612,sdh,2024-11-01,22,1600.0,true
+Lukas,2743612,sdh,1992-05-15,22,1600.0,true
 Birgitte Larsen,12345678,Ingerslevsgade 170 1705 København,1990-05-04,23,1600.0,true
-Sel,215612,somethomsfbs,2000-09-03,24,1600.0,false
+Sel,215612,somethomsfbs,1990-09-09,24,1600.0,false
 Sinky,1234689,her eller der,1999-11-30,25,1600.0,true
 Aline,0987654,derhjemme,2011-03-29,26,1000.0,true
+Lina,e,sdv,1985-02-02,27,1600.0,true

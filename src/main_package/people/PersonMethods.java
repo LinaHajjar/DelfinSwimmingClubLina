@@ -103,9 +103,10 @@ public class PersonMethods {
         String newName = input.nextLine();
 
         // Date of Birth input
-        System.out.println("Enter date of birth in the form year-month-day:");
-        LocalDate dateOfBirth = LocalDate.parse(input.next());
-        input.nextLine(); // Consume the newLine
+        //System.out.println("Enter date of birth in the form year-month-day:");
+        //LocalDate dateOfBirth = LocalDate.parse(input.next());
+        LocalDate dateOfBirth = Util.LocalDateInput();
+        //input.nextLine(); // Consume the newLine
 
         // Address input
         System.out.println("Enter address:");
@@ -241,10 +242,11 @@ public class PersonMethods {
                 System.out.println("Name updated successfully.\n");
                 break;
             case 2:
-                System.out.println("Enter new date of birth in the form year-month-day:");
-                LocalDate newdateOfBirth = LocalDate.parse(input.next());
+                //System.out.println("Enter new date of birth in the form year-month-day:");
+                //LocalDate newdateOfBirth = LocalDate.parse(input.next());
+                LocalDate newdateOfBirth = Util.LocalDateInput();
                 memberToEdit.setDateOfBirth(newdateOfBirth);
-                input.nextLine(); // consume the newline
+                //input.nextLine(); // consume the newline
                 System.out.println("Date of birth updated successfully.\n");
                 break;
             case 3:
@@ -298,9 +300,10 @@ public class PersonMethods {
         String newName = input.nextLine();
 
         // Date of Birth input
-        System.out.println("Enter date of birth in the form year-month-day:");
-        LocalDate dateOfBirth = LocalDate.parse(input.next());
-        input.nextLine(); // Consume the newLine
+        //System.out.println("Enter date of birth in the form year-month-day:");
+        //LocalDate dateOfBirth = LocalDate.parse(input.next());
+        //input.nextLine(); // Consume the newLine
+        LocalDate dateOfBirth = Util.LocalDateInput();
 
         // Address input
         System.out.println("Enter address:");
@@ -403,10 +406,11 @@ public class PersonMethods {
                 System.out.println("Name updated successfully.");
                 break;
             case 2:
-                System.out.println("Enter new date of birth in the form year-month-day:");
-                LocalDate newdateOfBirth = LocalDate.parse(input.next());
+                //System.out.println("Enter new date of birth in the form year-month-day:");
+                //LocalDate newdateOfBirth = LocalDate.parse(input.next());
+                LocalDate newdateOfBirth = Util.LocalDateInput();
                 employeeToEdit.setDateOfBirth(newdateOfBirth);
-                input.nextLine(); // consume the newline
+                //input.nextLine(); // consume the newline
                 System.out.println("Date of birth updated successfully.");
                 break;
             case 3:
